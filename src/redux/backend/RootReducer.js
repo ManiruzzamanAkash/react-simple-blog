@@ -1,4 +1,4 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import { combineReducers } from "redux";
 import AuthReducer from "./auth/AuthReducer";
 
 

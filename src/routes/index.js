@@ -1,4 +1,4 @@
-import LoginContainer from "../../../iBOSAppsFrontend/src/views/modules/Auth/LoginContainer";
+import LoginContainer from "../views/backend/auth/LoginContainer";
 import RegisterContainer from "../views/backend/auth/RegisterContainer";
 
 const routes = [

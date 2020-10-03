@@ -16,10 +16,10 @@ import * as Types  from "../Types";
       case Types.AUTH_LOGIN_CHECK:
         return {
           ...state,
-          isLoggedIn: action.payload.isLoggedIn,
+          isLoggedIn: action.payload.status,
           authUserData: action.payload.userData,
           authTokenData: action.payload.tokenData,
-          loginMessage: action.payload.loginMessage,
+          loginMessage: action.payload.message,
           isLoading: action.payload.isLoading
         };
   
