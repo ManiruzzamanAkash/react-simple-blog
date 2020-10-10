@@ -10,7 +10,6 @@ import App from "./App";
 
 /**** Start Import CSS & JS ***********/
 import "./assets/css/adminCustom.css";
-import "./assets/css/oneui.min.css";
 import 'react-toastify/dist/ReactToastify.css';
 
 // import "./assets/js/oneui.core.min.js";

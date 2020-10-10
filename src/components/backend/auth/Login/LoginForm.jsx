@@ -13,7 +13,7 @@ const LoginForm = withRouter(({ history, props }) => {
     const loginMessage = useSelector((state) => state.auth.loginMessage);
 
     useEffect(() => {
-        if (typeof loginMessage === null || typeof loginMessage === 'undefined') {
+        if (typeof loginMessage === 'undefined' || loginMessage === null) {
             toast.error("Something Went Wrong", {
                 autoClose: 2000,
                 className: "dangerColor",
@@ -36,7 +36,7 @@ const LoginForm = withRouter(({ history, props }) => {
                 });
             }
         }
-    }, [isLoggedIn, loginMessage]);
+    }, [isLoggedIn, loginMessage, history]);
 
     const submitHandler = (data) => {
         dispatch(loginSubmitAction(data));
@@ -57,6 +57,7 @@ const LoginForm = withRouter(({ history, props }) => {
                                 required: 'Please give your username or email address',
                                 maxLength: 30
                             })}
+                            autoComplete="email"
                         />
                         {
                             errors.email && 
@@ -73,6 +74,7 @@ const LoginForm = withRouter(({ history, props }) => {
                                 required: 'Please give your password',
                                 minLength: 6
                             })}
+                            autoComplete="current-password"
                         />
                         {
                             errors.password && 
