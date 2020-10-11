@@ -32,6 +32,39 @@ export const loginSubmitAction = (postData) => async (dispatch) => {
     dispatch({ type: Types.AUTH_LOGIN_CHECK, payload: data });
 };
 
+export const registerSubmitAction = (postData) => async (dispatch) => {
+    let data = {
+        status: false,
+        message: "",
+        isLoading: true,
+        tokenData: null,
+        userData: null
+    };
+    dispatch({ type: Types.AUTH_REGISTER_SUBMIT, payload: data });
+
+    await axios.post(`http://laravel07-starter.herokuapp.com/api/v1/sign-up`, postData)
+    .then(async (res) => {
+        console.log('res register', res);
+        const response = res.data;
+        if(response.meta.status === 200){
+            data.status = true;
+            data.tokenData = response.response.token;
+            data.message = "Account Created Successfully";
+            // Fetch and get the user information and set to localstorage
+            data.userData = await getProfileInformation(response.response.token);
+        }else{
+            data.status = false;
+            data.message = res.data.response.message;
+        }
+    })
+    .catch((err) => {
+        data.message = err.data;
+    });
+
+    data.isLoading = false;
+    dispatch({ type: Types.AUTH_REGISTER_SUBMIT, payload: data });
+};
+
 async function getProfileInformation(token) {
     let userInfo = {};
     const headerData = {

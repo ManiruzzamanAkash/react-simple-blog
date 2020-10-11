@@ -6,6 +6,7 @@ import * as Types  from "../Types";
     authUserData: {},
     authTokenData: {},
     loginMessage: "",
+    registerMessage: "",
     isLoading: false
   };
   
@@ -16,7 +17,6 @@ import * as Types  from "../Types";
       case Types.AUTH_LOGIN_CHECK:
 
         // Store it to local storage
-        console.log('action.payload', action.payload);
         localStorage.setItem('userData', JSON.stringify(action.payload.userData));
         localStorage.setItem('tokenData', action.payload.tokenData);
 
@@ -26,6 +26,21 @@ import * as Types  from "../Types";
           authUserData: action.payload.userData,
           authTokenData: action.payload.tokenData,
           loginMessage: action.payload.message,
+          isLoading: action.payload.isLoading
+        };
+
+
+      case Types.AUTH_REGISTER_SUBMIT:
+        // Store it to local storage
+        localStorage.setItem('userData', JSON.stringify(action.payload.userData));
+        localStorage.setItem('tokenData', action.payload.tokenData);
+
+        return {
+          ...state,
+          isLoggedIn: action.payload.status,
+          authUserData: action.payload.userData,
+          authTokenData: action.payload.tokenData,
+          registerMessage: action.payload.message,
           isLoading: action.payload.isLoading
         };
   

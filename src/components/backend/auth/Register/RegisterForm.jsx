@@ -3,43 +3,43 @@ import { useForm } from "react-hook-form";
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { loginSubmitAction } from '../../../../redux/backend/auth/AuthAction';
+import { registerSubmitAction } from '../../../../redux/backend/auth/AuthAction';
 
 const RegisterForm = withRouter(({ history, props }) => {
-    const { register, handleSubmit, errors } = useForm();
+    const { register, handleSubmit, errors, getValues } = useForm();
     const dispatch = useDispatch();
     const isLoading = useSelector((state) => state.auth.isLoading);
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-    const loginMessage = useSelector((state) => state.auth.loginMessage);
+    const registerMessage = useSelector((state) => state.auth.registerMessage);
 
     useEffect(() => {
-        if (typeof loginMessage === 'undefined' || loginMessage === null) {
+        if (typeof registerMessage === 'undefined' || registerMessage === null) {
             toast.error("Something Went Wrong", {
                 autoClose: 2000,
                 className: "dangerColor",
                 position: toast.POSITION.BOTTOM_RIGHT,
             });
         } else {
-            if (isLoggedIn && loginMessage.length > 0) {
-                toast.success(loginMessage, {
+            if (isLoggedIn && registerMessage.length > 0) {
+                toast.success(registerMessage, {
                     autoClose: 2000,
                     className: "primaryColor",
                     position: toast.POSITION.BOTTOM_RIGHT,
                 });
                 history.push("/dashboard");
             }
-            if (!isLoggedIn && loginMessage.length > 0) {
-                toast.error(loginMessage, {
+            if (!isLoggedIn && registerMessage.length > 0) {
+                toast.error(registerMessage, {
                     autoClose: 2000,
                     className: "dangerColor",
                     position: toast.POSITION.BOTTOM_RIGHT,
                 });
             }
         }
-    }, [isLoggedIn, loginMessage, history]);
+    }, [isLoggedIn, registerMessage, history]);
 
     const submitHandler = (data) => {
-        dispatch(loginSubmitAction(data));
+        dispatch(registerSubmitAction(data));
     }
 
     return ( 
@@ -107,8 +107,9 @@ const RegisterForm = withRouter(({ history, props }) => {
                             name="confirm_password"
                             placeholder="Confirm Password" 
                             ref={register({
-                                required: 'Please give your confirm password',
-                                minLength: 6
+                                required: 'Please confirm your password',
+                                minLength: 6,
+                                validate: (value) => value === getValues('password') || "Passwords don't match."
                             })}
                             autoComplete="confirm-password"
                         />
