@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import LoginForm from '../../../components/backend/auth/Login/LoginForm';
 
 const LoginContainer = () => {
@@ -15,10 +16,8 @@ const LoginContainer = () => {
                                             <div className="block-header">
                                                 <h3 className="block-title">Sign In</h3>
                                                 <div className="block-options">
-                                                    <a className="btn-block-option font-size-sm" href="op_auth_reminder.html">Forgot Password?</a>
-                                                    <a className="btn-block-option" href="op_auth_signup.html" data-toggle="tooltip" data-placement="left" title="New Account">
-                                                        <i className="fa fa-user-plus"></i>
-                                                    </a>
+                                                    {/* <a className="btn-block-option font-size-sm" href="op_auth_reminder.html">Forgot Password?</a> */}
+                                                    <Link className="btn-block-option" to="/sign-up" data-toggle="tooltip" data-placement="left" title="New Account"><i className="fa fa-user-plus"></i></Link>
                                                 </div>
                                             </div>
                                             <div className="block-content">
