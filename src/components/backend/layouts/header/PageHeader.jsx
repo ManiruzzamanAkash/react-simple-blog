@@ -36,13 +36,13 @@ const PageHeader = () => {
                     <div className="d-flex align-items-center">
                         <div className="dropdown d-inline-block ml-2">
                             <button type="button" className="btn btn-sm btn-dual" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img className="rounded" src="assets/media/avatars/avatar10.jpg" alt="Header Avatar" style={{ width: 18 }} />
+                                <img className="rounded" src="/assets/media/avatars/avatar10.jpg" alt="Header Avatar" style={{ width: 18 }} />
                                 <span className="d-none d-sm-inline-block ml-1">Adam</span>
                                 <i className="fa fa-fw fa-angle-down d-none d-sm-inline-block"></i>
                             </button>
                             <div className="dropdown-menu dropdown-menu-right p-0 border-0 font-size-sm" aria-labelledby="page-header-user-dropdown">
                                 <div className="p-3 text-center bg-primary">
-                                    <img className="img-avatar img-avatar48 img-avatar-thumb" src="assets/media/avatars/avatar10.jpg" alt="" />
+                                    <img className="img-avatar img-avatar48 img-avatar-thumb" src="/assets/media/avatars/avatar10.jpg" alt="" />
                                 </div>
                                 <div className="p-2">
                                     <h5 className="dropdown-header text-uppercase">User Options</h5>
