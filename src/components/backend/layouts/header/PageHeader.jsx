@@ -1,7 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
+
+import { logoutAuthenticatedUser } from '../../../../redux/backend/auth/AuthAction';
 import UserHeaderInfo from './user-data/UserHeaderInfo';
 
 const PageHeader = () => {
+
+    const dispatch = useDispatch();
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+    const submitLogout = useSelector((state) => state.auth.submitLogout);
+
+    const logout = () => {
+        dispatch(logoutAuthenticatedUser());
+    }
+    
+    useEffect(() => {
+        if(!isLoggedIn && submitLogout){
+            window.location.href="/";
+        }
+    }, [isLoggedIn, submitLogout]);
+
     return ( 
         <>
           <header id="page-header">
@@ -46,10 +65,10 @@ const PageHeader = () => {
                                 </div>
                                 <div className="p-2">
                                     <h5 className="dropdown-header text-uppercase">User Options</h5>
-                                    <a className="dropdown-item d-flex align-items-center justify-content-between" href="op_auth_signin.html">
+                                    <Link className="dropdown-item d-flex align-items-center justify-content-between" onClick={() => logout()}>
                                         <span>Log Out</span>
                                         <i className="si si-logout ml-1"></i>
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
