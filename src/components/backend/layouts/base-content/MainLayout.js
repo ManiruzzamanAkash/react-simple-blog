@@ -21,7 +21,9 @@ const MainLayout = (props) => {
 
                 {/* Include Additional Props */}
                 <main id="main-container">
-                    {props.children && props.children }
+                    <>
+                        {props.children && props.children }
+                    </>
                 </main>
 
                 {/* Include Footer */}
