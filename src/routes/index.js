@@ -1,6 +1,8 @@
 import LoginContainer from "../views/backend/auth/LoginContainer";
 import RegisterContainer from "../views/backend/auth/RegisterContainer";
 import DashboardContainer from "../views/backend/dashboard/DashboardContainer";
+import PostAddContainer from "../views/backend/post/PostAddContainer";
+import PostListContainer from "../views/backend/post/PostListContainer";
 
 const routes = [
     {
@@ -21,6 +23,22 @@ const routes = [
       component: DashboardContainer,
       exact: true,
     },
+
+
+    /*** Posts Routes ***/
+    {
+      path: "/posts",
+      name: "Post Component",
+      component: PostListContainer,
+      exact: true,
+    },
+    {
+      path: "/posts/create",
+      name: "Post Create Component",
+      component: PostAddContainer,
+      exact: true,
+    },
+
 ]
 
 export default routes;
