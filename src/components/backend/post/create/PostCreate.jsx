@@ -12,7 +12,7 @@ const PostCreate = withRouter(({ history, props }) => {
     const postAddMessage = useSelector((state) => state.post.postAddMessage);
 
     const submitHandler = (data) => {
-        // dispatch(storePostAction(data));
+        dispatch(storePostAction(data));
     }
 
     return ( 
