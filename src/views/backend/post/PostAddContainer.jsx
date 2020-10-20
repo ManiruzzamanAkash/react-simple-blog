@@ -5,7 +5,8 @@ import PostCreate from '../../../components/backend/post/create/PostCreate';
 const PostAddContainer = () => {
     return ( 
         <MainLayout>
-            <PostCreate />
+            {/* <PostCreate />
+            <Dashboard /> */}
         </MainLayout>
     );
 }
