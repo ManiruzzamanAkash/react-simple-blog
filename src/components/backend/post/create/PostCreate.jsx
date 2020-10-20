@@ -1,6 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useForm } from "react-hook-form";
+import { withRouter } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { storePostAction } from '../../../../redux/backend/post/PostAction';
 
-const PostCreate = () => {
+const PostCreate = withRouter(({ history, props }) => {
+    const { register, handleSubmit, errors, getValues } = useForm();
+    const dispatch = useDispatch();
+    const isLoading = useSelector((state) => state.post.isLoading);
+    const postAddMessage = useSelector((state) => state.post.postAddMessage);
+
+    const submitHandler = (data) => {
+        // dispatch(storePostAction(data));
+    }
+
     return ( 
         <>
             {/* <!-- Page Header --> */}
@@ -28,14 +42,28 @@ const PostCreate = () => {
                             {/* <!-- Static Labels --> */}
                             <div className="block">
                                 <div className="block-content block-content-narrow">
-                                    <form className="form-horizontal push-10-t add-post-form" action="" method="post" noValidate="novalidate">
+                                    <form className="form-horizontal push-10-t add-post-form" onSubmit={handleSubmit(submitHandler)} method="POST">
                                         {/* <input type="hidden" name="_token" value="c8ASC4EeZ1OISPDK9JBxaz85ZfzDrVpnbWtyW9DB" /> */}
 
                                         <div className="form-group">
                                             <div className="col-sm-12">
                                                 <div className="form-material form-material-primary">
-                                                    <input className="form-control" type="text" id="post-title" name="title" placeholder="Post Title" value="" required="" aria-required="true" />
                                                     <label htmlFor="post-title">Title</label>
+                                                    <input className="form-control" 
+                                                        type="text" id="post-title" 
+                                                        name="title" 
+                                                        placeholder="Post Title"
+                                                        required="" 
+                                                        aria-required="true" 
+                                                        ref={register({
+                                                            required: 'Please give post title'
+                                                        })}
+                                                        autoComplete="name"
+                                                    />
+                                                    {
+                                                        errors.title && 
+                                                        <div className="text-danger text-sm">{errors.title.message}</div>
+                                                    }
                                                 </div>
                                                 
                                             </div>
@@ -44,8 +72,23 @@ const PostCreate = () => {
                                         <div className="form-group">
                                             <div className="col-sm-12">
                                                 <div className="form-material form-material-primary">
-                                                    <textarea className="form-control" type="text" id="post-body" name="body" placeholder="Post Description" required="" aria-required="true"></textarea>
                                                     <label htmlFor="post-body">Description</label>
+                                                    <textarea 
+                                                        className="form-control" 
+                                                        type="text" 
+                                                        id="post-body" 
+                                                        name="body" 
+                                                        placeholder="Post Description" 
+                                                        required="" 
+                                                        aria-required="true" 
+                                                        ref={register({
+                                                            required: 'Please give post description'
+                                                        })}
+                                                    ></textarea>
+                                                    {
+                                                        errors.body && 
+                                                        <div className="text-danger text-sm">{errors.body.message}</div>
+                                                    }
                                                 </div>
                                                 
                                             </div>
@@ -66,6 +109,6 @@ const PostCreate = () => {
                 {/* <!-- END Page Content --> */}
         </>
      );
-}
+})
  
 export default PostCreate;

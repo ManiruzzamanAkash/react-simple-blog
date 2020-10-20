@@ -14,6 +14,7 @@ const RegisterForm = withRouter(({ history, props }) => {
 
     useEffect(() => {
         if (typeof registerMessage === 'undefined' || registerMessage === null) {
+            // We can minimize these things to global latter. 
             toast.error("Something Went Wrong", {
                 autoClose: 2000,
                 className: "dangerColor",
