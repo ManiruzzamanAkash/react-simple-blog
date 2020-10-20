@@ -11,6 +11,7 @@ axios.interceptors.request.use(
        const token = localStorageService.getAccessToken();
        if (token) {
            config.headers['Authorization'] = token; // as return full code with token type
+           config.headers['Accept'] = 'application/json';
        }
        // config.headers['Content-Type'] = 'application/json';
        return config;
