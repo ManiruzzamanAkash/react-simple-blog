@@ -1,5 +1,6 @@
 import * as Types from '../Types';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export const loginSubmitAction = (postData) => async (dispatch) => {
     let data = {
@@ -18,8 +19,14 @@ export const loginSubmitAction = (postData) => async (dispatch) => {
         if(response.meta.status === 200){
             data.status = true;
             data.access_token = response.response.token;
+
+            // Store it to local storage
+            localStorage.setItem('access_token', response.response.token);
+            localStorage.setItem('refresh_token', response.response.refresh_token);
+            
             // Fetch and get the user information and set to localstorage
             data.userData = await getProfileInformation(response.response.token);
+            localStorage.setItem('userData', JSON.stringify(data.userData));
         }else{
             data.status = false;
         }
@@ -27,7 +34,11 @@ export const loginSubmitAction = (postData) => async (dispatch) => {
     .catch((err) => {
         data.message = err.data;
     });
-
+    if(data.status){
+        toast.success(data.message);
+    }else{
+        toast.error(data.message);
+    }
     data.isLoading = false;
     dispatch({ type: Types.AUTH_LOGIN_CHECK, payload: data });
 };
@@ -45,14 +56,19 @@ export const registerSubmitAction = (postData) => async (dispatch) => {
 
     await axios.post(`http://laravel07-starter.herokuapp.com/api/v1/sign-up`, postData)
     .then(async (res) => {
-        console.log('res register', res);
         const response = res.data;
         if(response.meta.status === 200){
             data.status = true;
             data.access_token = response.response.token;
             data.message = "Account Created Successfully";
+
+             // Store it to local storage
+             localStorage.setItem('access_token', response.response.token);
+             localStorage.setItem('refresh_token', response.response.refresh_token);
+
             // Fetch and get the user information and set to localstorage
             data.userData = await getProfileInformation(response.response.token);
+            localStorage.setItem('userData', JSON.stringify(data.userData));
         }else{
             data.status = false;
             data.message = res.data.response.message;
@@ -101,22 +117,16 @@ export const logoutAuthenticatedUser = () => async (dispatch) => {
 
 async function getProfileInformation(token) {
     let userInfo = {};
-    const headerData = {
-        headers: {
-            "Access-Control-Allow-Origin" : "*",
-            "Content-type": "Application/json",
-            "Authorization": `${token}`
-        }   
-    }
 
-    await axios.get(`http://laravel07-starter.herokuapp.com/api/v1/user-info`, headerData)
+    await axios.get(`http://laravel07-starter.herokuapp.com/api/v1/user-info`)
     .then((res) => {
         const response = res.data;
         if(response.meta.status === 200){
-            userInfo =response.response.user;
+            userInfo = response.response.user;
         }
     })
     .catch((err) => {
+        console.log('profile fetch err', err);
     });
     return userInfo;
 }

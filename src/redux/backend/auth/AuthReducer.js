@@ -16,13 +16,6 @@ import * as Types  from "../Types";
   
     switch (action.type) {
       case Types.AUTH_LOGIN_CHECK:
-
-        // Store it to local storage
-        localStorage.setItem('userData', JSON.stringify(action.payload.userData));
-        
-        localStorage.setItem('access_token', action.payload.access_token);
-        localStorage.setItem('refresh_token', action.payload.refresh_token);
-
         return {
           ...state,
           isLoggedIn: action.payload.status,
@@ -34,12 +27,6 @@ import * as Types  from "../Types";
 
 
       case Types.AUTH_REGISTER_SUBMIT:
-        // Store it to local storage
-        localStorage.setItem('userData', JSON.stringify(action.payload.userData));
-
-        localStorage.setItem('access_token', action.payload.access_token);
-        localStorage.setItem('refresh_token', action.payload.refresh_token);
-
         return {
           ...state,
           isLoggedIn: action.payload.status,
