@@ -20,7 +20,7 @@ import * as Types  from "../Types";
 
         return {
           ...state,
-          isLoggedIn: action.payload.data,
+          postList: action.payload.data,
         };
 
       case Types.POST_CREATE:

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useForm } from "react-hook-form";
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify";
 import { storePostAction } from '../../../../redux/backend/post/PostAction';
 
 const PostCreate = withRouter(({ history, props }) => {
