@@ -1,7 +1,8 @@
 import React, { useEffect }  from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
-import { getPostAction } from '../../../../redux/backend/post/PostAction';
+import Swal from 'sweetalert2'
+import { getPostAction, deletePostAction } from '../../../../redux/backend/post/PostAction';
 
 const PostList = () => {
     const dispatch = useDispatch();
@@ -11,6 +12,20 @@ const PostList = () => {
     useEffect(() => {
         dispatch(getPostAction());
     }, []);
+
+    const deletePost = (id) => {
+        Swal.fire({
+            title: 'Error!',
+            text: 'Do you want to continue',
+            icon: 'error',
+            showConfirmButton: true,
+            confirmButtonText: 'Yes, Delete',
+            showCancelButton: true,
+            cancelButtonText: 'No'
+          }).then(() => {
+            dispatch(deletePostAction(id));
+          });
+    }
 
     return ( 
         <>
@@ -39,8 +54,8 @@ const PostList = () => {
                                 <td>{post.title}</td>
                                 <td>{post.body}</td>
                                 <td>
-                                    <button className="btn btn-sanger">
-                                        <i className="fa fa-trash"></i>
+                                    <button className="btn" onClick={() => deletePost(post.id)}>
+                                        <i className="fa fa-trash text-danger"></i>
                                     </button>
                                 </td>
                             </tr>
