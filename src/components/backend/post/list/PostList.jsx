@@ -13,6 +13,10 @@ const PostList = () => {
         dispatch(getPostAction());
     }, []);
 
+    const editPost = (post) => {
+        console.log('post', post);
+    }
+
     const deletePost = (id) => {
         Swal.fire({
             title: 'Error!',
@@ -22,8 +26,11 @@ const PostList = () => {
             confirmButtonText: 'Yes, Delete',
             showCancelButton: true,
             cancelButtonText: 'No'
-          }).then(() => {
-            dispatch(deletePostAction(id));
+          },
+          function(isConfirm){
+            if (isConfirm){
+                dispatch(deletePostAction(id));
+             }
           });
     }
 
@@ -56,6 +63,10 @@ const PostList = () => {
                                 <td>
                                     <button className="btn" onClick={() => deletePost(post.id)}>
                                         <i className="fa fa-trash text-danger"></i>
+                                    </button>
+                                    
+                                    <button className="btn ml-1" onClick={() => editPost(post)}>
+                                        <i className="fa fa-edit text-success"></i>
                                     </button>
                                 </td>
                             </tr>
