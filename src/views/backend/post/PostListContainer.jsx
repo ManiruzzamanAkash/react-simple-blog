@@ -14,7 +14,6 @@ const PostListContainer = () => {
                             Post
                         </a>
                     </div>
-
                     <PostList />
                 </div>
             </div>

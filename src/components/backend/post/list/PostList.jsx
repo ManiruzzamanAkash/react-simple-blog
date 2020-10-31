@@ -1,5 +1,5 @@
 import React, { useEffect }  from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import Swal from 'sweetalert2'
 import { getPostAction, deletePostAction } from '../../../../redux/backend/post/PostAction';
@@ -12,10 +12,6 @@ const PostList = () => {
     useEffect(() => {
         dispatch(getPostAction());
     }, []);
-
-    const editPost = (post) => {
-        console.log('post', post);
-    }
 
     const deletePost = (id) => {
         Swal.fire({
@@ -64,10 +60,9 @@ const PostList = () => {
                                     <button className="btn" onClick={() => deletePost(post.id)}>
                                         <i className="fa fa-trash text-danger"></i>
                                     </button>
-                                    
-                                    <button className="btn ml-1" onClick={() => editPost(post)}>
+                                    <Link to={`/posts/edit/${post.id}`} className="btn ml-1">
                                         <i className="fa fa-edit text-success"></i>
-                                    </button>
+                                    </Link>
                                 </td>
                             </tr>
                         ))
