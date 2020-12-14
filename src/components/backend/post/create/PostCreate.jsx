@@ -24,12 +24,12 @@ const PostCreate = withRouter(({ history, props }) => {
     useEffect(() => {
         if (typeof postAddMessage !== 'undefined' || postAddMessage !== null) {
             if (postAddStatus && postAddMessage.length > 0) {
-                // history.push("/posts"); 
                 // We can push to list OR, make feilds empty.
                 reset({
                     title: "",
                     body: ""
                 });
+                history.push("/posts"); 
             }
         }
     }, [postAddStatus, postAddMessage, history]);
@@ -119,8 +119,18 @@ const PostCreate = withRouter(({ history, props }) => {
 
                                         <div className="form-group">
                                             <div className="col-sm-9">
-                                                <button className="btn btn-sm btn-primary" type="submit">Submit</button>
-                                            </div>
+                                            {
+                                                !isLoading && 
+                                                <button className="btn btn-sm btn-primary" type="submit">
+                                                    Submit
+                                                </button>
+                                            }
+                                            {
+                                                isLoading && 
+                                                <button className="btn btn-sm btn-primary" type="button" disabled>
+                                                    Submitting ...
+                                                </button>
+                                            }                                            </div>
                                         </div>
                                     </form>
                                 </div>

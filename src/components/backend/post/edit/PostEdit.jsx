@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useForm } from "react-hook-form";
 import { Link, useParams, withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
-import { getPostDetailAction, storePostAction } from '../../../../redux/backend/post/PostAction';
+import { getPostDetailAction, handleChangePostInput, postUpdateAction, storePostAction } from '../../../../redux/backend/post/PostAction';
 
 const PostEdit = withRouter(({ history, match }, props) => {
     const { id } = useParams();
@@ -11,26 +11,25 @@ const PostEdit = withRouter(({ history, match }, props) => {
     const isLoading = useSelector((state) => state.post.isLoading);
     const postUpdateMessage = useSelector((state) => state.post.postUpdateMessage);
     const postUpdateStatus = useSelector((state) => state.post.postUpdateStatus);
+    const postData = useSelector((state) => state.post.postData);
 
-    // const { id } = props.match.params;
-    // alert(id);
-
-    const submitHandler = (data) => {
-        dispatch(storePostAction(data));
+    const submitHandler = () => {
+        dispatch(postUpdateAction(postData, postData.id));
     }
+
+    const handleChangeTextInput = (name, value) => {
+        dispatch(handleChangePostInput(name, value));
+    };
 
     useEffect(() => {
         dispatch(getPostDetailAction(match.params.id))
 
         if (typeof postUpdateMessage !== 'undefined' || postUpdateMessage !== null) {
             if (postUpdateStatus && postUpdateMessage.length > 0) {
-                reset({
-                    title: "",
-                    body: ""
-                });
+                history.push("/posts"); 
             }
         }
-    }, [postUpdateStatus, postUpdateMessage, history]);
+    }, [postUpdateStatus, postUpdateMessage]);
 
     return (
         <>
@@ -39,7 +38,7 @@ const PostEdit = withRouter(({ history, match }, props) => {
                     <div className="col-sm-8">
                         <h1 className="page-heading">
                             Edit Post
-                            </h1>
+                        </h1>
                     </div>
                     <div className="col-sm-4 text-right hidden-xs">
                         <ol className="breadcrumb push-10-t">
@@ -71,6 +70,8 @@ const PostEdit = withRouter(({ history, match }, props) => {
                                                     ref={register({
                                                         required: 'Please give post title'
                                                     })}
+                                                    onChange={(e) => handleChangeTextInput('title', e.target.value)}
+                                                    value={postData.title}
                                                     autoComplete="name"
                                                 />
                                                 {
@@ -97,6 +98,8 @@ const PostEdit = withRouter(({ history, match }, props) => {
                                                     ref={register({
                                                         required: 'Please give post description'
                                                     })}
+                                                    onChange={(e) => handleChangeTextInput('body', e.target.value)}
+                                                    value={postData.body}
                                                 ></textarea>
                                                 {
                                                     errors.body &&
@@ -109,7 +112,18 @@ const PostEdit = withRouter(({ history, match }, props) => {
 
                                     <div className="form-group">
                                         <div className="col-sm-9">
-                                            <button className="btn btn-sm btn-primary" type="submit">Submit</button>
+                                            {
+                                                !isLoading && 
+                                                <button className="btn btn-sm btn-primary" type="submit">
+                                                    Submit
+                                                </button>
+                                            }
+                                            {
+                                                isLoading && 
+                                                <button className="btn btn-sm btn-primary" type="button" disabled>
+                                                    Submitting ...
+                                                </button>
+                                            }
                                         </div>
                                     </div>
                                 </form>

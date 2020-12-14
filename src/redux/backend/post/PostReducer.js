@@ -70,6 +70,15 @@ const PostReducer = (state = initialState, action) => {
                 postDeleteMessage: action.payload.message,
             };
 
+        case Types.POST_UPDATE:
+            return {
+                ...state,
+                isLoading: action.payload.isLoading,
+                postData: action.payload.data,
+                postUpdateStatus: action.payload.status,
+                postUpdateMessage: action.payload.message,
+            };
+
         default:
             break;
     }
