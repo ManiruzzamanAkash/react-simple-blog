@@ -62,6 +62,15 @@ export const getPostDetailAction = (id) => (dispatch) => {
     dispatch({ type: Types.POST_SHOW, payload: data });
 };
 
+
+export const handleChangePostInput = (name, value) => (dispatch) => {
+    let data = {
+        name: name,
+        value: value,
+    }
+    dispatch({ type: Types.CHANGE_POST_INPUT, payload: data });
+};
+
 export const storePostAction = (postData) => async(dispatch) => {
     let data = {
         status: false,

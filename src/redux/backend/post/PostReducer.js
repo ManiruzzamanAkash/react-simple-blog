@@ -44,6 +44,22 @@ const PostReducer = (state = initialState, action) => {
                 postData: action.payload.data,
             };
 
+        case Types.CHANGE_POST_INPUT:
+            const postData = {...state.postData };
+            postData[action.payload.name] = action.payload.value;
+            return {
+                ...state,
+                postData
+            };
+
+        case Types.EMPTY_POST_MESSAGE:
+            return {
+                ...state,
+                postAddMessage: null,
+                postUpdateMessage: null,
+                postDeleteMessage: null,
+            };
+
         case Types.POST_DELETE:
             const deletedID = action.payload.data;
             const updatedPostList = state.postList.filter((x) => x.id != deletedID);

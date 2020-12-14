@@ -2,18 +2,24 @@ import React, { useEffect } from 'react';
 import { useForm } from "react-hook-form";
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
-import { storePostAction } from '../../../../redux/backend/post/PostAction';
+import { handleChangePostInput, storePostAction } from '../../../../redux/backend/post/PostAction';
 
 const PostCreate = withRouter(({ history, props }) => {
     const { register, handleSubmit, errors, getValues, reset } = useForm();
     const dispatch = useDispatch();
+
     const isLoading = useSelector((state) => state.post.isLoading);
     const postAddMessage = useSelector((state) => state.post.postAddMessage);
     const postAddStatus = useSelector((state) => state.post.postAddStatus);
+    const postData = useSelector((state) => state.post.postData);
 
-    const submitHandler = (data) => {
-        dispatch(storePostAction(data));
+    const submitHandler = () => {
+        dispatch(storePostAction(postData));
     }
+
+    const handleChangeTextInput = (name, value) => {
+        dispatch(handleChangePostInput(name, value));
+    };
 
     useEffect(() => {
         if (typeof postAddMessage !== 'undefined' || postAddMessage !== null) {
@@ -71,6 +77,8 @@ const PostCreate = withRouter(({ history, props }) => {
                                                         ref={register({
                                                             required: 'Please give post title'
                                                         })}
+                                                        onChange={(e) => handleChangeTextInput('title', e.target.value)}
+                                                        value={postData.title}
                                                         autoComplete="name"
                                                     />
                                                     {
@@ -97,6 +105,8 @@ const PostCreate = withRouter(({ history, props }) => {
                                                         ref={register({
                                                             required: 'Please give post description'
                                                         })}
+                                                        onChange={(e) => handleChangeTextInput('body', e.target.value)}
+                                                        value={postData.body}
                                                     ></textarea>
                                                     {
                                                         errors.body && 
